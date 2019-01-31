@@ -30,6 +30,10 @@ while game:
         if current_frame is None:
             break
 
+        if not first and 385 <= frames <= 750:
+            block_points = cv.boxPoints(block_rec)
+            cv.polylines(current_frame, np.int32([block_points]), True, (0, 0, 0), thickness=16)
+
         if frames <= 30:  # Only look for car in first 30 frames
             recs = casc_obj.detectMultiScale(current_frame)
 
@@ -62,11 +66,6 @@ while game:
                     base_width = rec[1][0]
                     first = False
 
-                    min_height = .5 * base_height
-                    min_width = .5 * base_width
-                    max_height = 1.2 * base_height
-                    max_width = 2.4 * base_width
-
                 bp_mask = np.zeros(cur_bp.shape, dtype=np.uint8)
                 cen_x = rec[0][0]
                 cen_y = rec[0][1]
@@ -76,22 +75,9 @@ while game:
                 bp_mask[int(fin_y):int(fin_y + height), int(fin_x):int(fin_x + width)] = 255
                 cur_bp = cv.bitwise_and(cur_bp, cur_bp, mask=bp_mask)
 
-            pot_rec, pot_search_window = cv.CamShift(cur_bp, search_window, crit)
+            rec, search_window = cv.CamShift(cur_bp, search_window, crit)
 
-            ratio = pot_rec[1][0]/pot_rec[1][1]
-
-            if frames > 25:
-                if min_width < pot_rec[1][0] < max_width and min_height < pot_rec[1][1] < max_height:
-                    rec = pot_rec
-                    search_window = pot_search_window
-                else:
-                    if not min_width < pot_rec[1][0] < max_width:
-                        print(f'Rectangle Rejected (Width): {pot_rec[1][0]} | {min_width, max_width}')
-                    elif not min_height < pot_rec[1][0] < max_height:
-                        print(f'Rectangle Rejected (Height): {pot_rec[1][1]} | {min_height, max_height}')
-            else:
-                rec = pot_rec
-                search_window = pot_search_window
+            block_rec = ((rec[0][0], rec[0][1]), (rec[1][0] * 3, rec[1][1] * 1.65), rec[2])
 
             if rec == null_rec or rec[1][1] <= (base_height * .75):
                 if streak == 0:
