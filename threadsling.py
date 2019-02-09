@@ -26,11 +26,9 @@ current_frame = None
 recent_frame = None
 show_frame = None
 
-anchor_frame = -50
-tap_val = 123
-rel_val = 113
-cutoff = 15
-loop_frames = 35
+tap_val = 110
+rel_val = 105
+cutoff = 10
 
 frames = 0
 streak = 0
@@ -158,7 +156,7 @@ while game:
 
         rec, search_window = cv.CamShift(cur_bp, search_window, crit)
 
-        if rec == null_rec or rec[1][1] <= (base_height * .65):
+        if rec == null_rec or rec[1][1] <= (base_height * .55):
             no_rec = True
             if streak == 0:
                 x, y, w, h = search_window
@@ -181,7 +179,7 @@ while game:
             if tap and h_two >= base_height * .4:
                 h_two = h_two * .85
             elif not tap:
-                h_two = rec[1][1] * 2.75
+                h_two = rec[1][1] * 2.5
                 
             w_two = rec[1][0] * 3.25
             
@@ -227,7 +225,6 @@ while game:
             else:
                 dif = abs(last_ang - rot_ang)
                 if 75 <= dif <= 300:
-                    print('Difference of ' + str(dif) + ': Swapping Front of ' + str(frames))
                     if B_1:
                         front = box_2
                     else:
@@ -263,10 +260,8 @@ while game:
                 val_max = rot_crop_hsv[:, :, 2].max()
                 val_min = rot_crop_hsv[:, :, 2].min()
                 front_range = val_max - val_min
-
-                anc = frames - anchor_frame
                 
-                if front_range >= 80 and frames % 30 != 0:
+                if front_range >= 80:
                     wp.pwmWrite(18, tap_val)
                     tap = True
                 else:
@@ -276,8 +271,6 @@ while game:
         # Drawing
         if tap:
             cv.drawMarker(current_frame, (50, 50), (0, 0, 255), 3)
-            if anc <= loop_frames:
-                cv.drawMarker(current_frame, (70, 50), (255, 0, 0), 2)
 
         points = cv.boxPoints(rec)
         cv.polylines(current_frame, np.int32([points]), True, (255, 0, 0))
