@@ -28,6 +28,7 @@ frame is used to generate a histogram of values for CAMShift.
 
 The classifier was trained using the following parameters with OpenCV's opencv_createsamples.exe and opencv_tran_cascade.exe.
 
+
 *VEC Samples*
 
 Training Samples: 1000
@@ -35,6 +36,7 @@ Training Samples: 1000
 Width: 20
 
 Height: 40
+
 
 *Training Cascade*
 
