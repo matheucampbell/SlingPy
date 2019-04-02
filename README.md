@@ -26,7 +26,7 @@ expensive and cannot detect the orientation of the car, so it's not used to trac
 more versatile function to utilize. Though the classifier is run on every one of the first 13 frames, only the 13th matters. This last
 frame is used to generate a histogram of values for CAMShift. 
 
-The classifier was trained using the following parameters with OpenCV's opencv_createsamples.exe and opencv_tran_cascade.exe.
+The classifier was trained using the following parameters with OpenCV's opencv_createsamples.exe and opencv_train_cascade.exe.
 
 
 *VEC Samples*
