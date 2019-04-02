@@ -9,7 +9,7 @@ making Raspberry Pi ideal. Portability wasn't ever achieved due to the machine's
 
 The motor's end effector was comprised of foil wrapped around a plastic arm connected to a spool of wire via jumper wire. This allowed
 the foil to disrupt the capacitance of the phone enough to trigger a response. The motor only needed to be able to tap the screen. This 
-requires very little torque or range of motion, and micro-servos are cheap.
+requires very little torque or range of motion and micro-servos are cheap.
 
 # Software
 **Fetching Frames**
