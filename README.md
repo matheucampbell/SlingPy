@@ -17,7 +17,7 @@ requires very little torque or range of motion and micro-servos are cheap.
 The Raspberry Pi's camera module cannot fetch frames very quickly, so the program resolves frames in a thread separate from the main one 
 to maximize framerate. Additionally, the PiCamera is run at the lowest framerate at which the car is discernible. The built-in
 Python module PiCamera was used to interface with the camera. Frames are also shown in a separate thread to prevent unnecessary 
-processinglag.
+processing lag.
 
 **Initial Detection (Cascade Classifier)**
 
